@@ -1,28 +1,33 @@
 const Discord = require("discord.js");
 const config = require("./config.json");
+const client = new Discord.Client({
+  intents: [
+      Discord.Intents.FLAGS.GUILDS,
+      Discord.Intents.FLAGS.GUILD_MESSAGES
+  ] 
+})
 
-const client = new Discord.Client();
+client.once("ready", async () => {
+  console.log("PkapaBot está na área")
+})
 
-const prefix = "!";
-
-client.on("message", function(message) {
+client.on("messageCreate", message => {
   if (message.author.bot) return;
-  if (!message.content.startsWith(prefix)) return;
+  if (message.channel.type == "dm") return;
+  if (!message.content.toLowerCase().startsWith(config.prefix.toLocaleLowerCase())) return;
+  if(message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`)) return;
 
-  const commandBody = message.content.slice(prefix.length);
-  const args = commandBody.split(' ');
+  const args = message.content.trim().slice(config.prefix.length).split(/ +/g);
+
   const command = args.shift().toLowerCase();
 
-  if (command === "ping") {
-    const timeTaken = Date.now() - message.createdTimestamp;
-    message.reply(`Pong! This message had a latency of ${timeTaken}ms.`);
+  try {
+    const commandFile = require(`./commands/${command}.js`)
+    commandFile.run(client, message, args);
   }
-
-  else if (command === "sum") {
-    const numArgs = args.map(x => parseFloat(x));
-    const sum = numArgs.reduce((counter, x) => counter += x);
-    message.reply(`The sum of all the arguments you provided is ${sum}!`);
+  catch(err){
+    console.error("Erro:" + err);
   }
-});
+})
 
-client.login(config.BOT_TOKEN);
+client.login(config.token);

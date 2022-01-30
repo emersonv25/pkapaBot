@@ -1,0 +1,15 @@
+{
+  "name": "pkapaBot",
+  "version": "0.0.1",
+  "description": "pkapaBot",
+  "scripts": {
+    "start": "npm run index.js",
+    "dev": "nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "discord.js": "^13.6.0"
+  }
+}
