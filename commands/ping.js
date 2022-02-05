@@ -4,7 +4,7 @@ module.exports = {
     name: "ping",
     author: "ferinha",
 
-    run: async(client, message, args) => {
+    async run(client, message, args) {
         let cor_embed = "GREEN"
         let ping = client.ws.ping
 
