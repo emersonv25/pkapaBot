@@ -32,6 +32,7 @@ client.on("messageCreate", message => {
   }
   catch(err){
     console.error("Erro:" + err);
+    message.channel.send("OPS, não conheço este comando !")
   }
 })
 
