@@ -33,7 +33,7 @@ module.exports = {
             const player = createAudioPlayer({behaviors: { noSubscriber: NoSubscriberBehavior.Play}});
             player.play(resource);
             connection.subscribe(player);
-            this.sendMsgMusic(message, yt_info.video_details.title)
+            this.sendMsgPlayer(message, yt_info.video_details.title)
           return
         }
         else{
@@ -52,7 +52,7 @@ module.exports = {
               player.play(resource);
               connection.subscribe(player);
 
-              this.sendMsgMusic(message, yt_info.video_details.title)
+              this.sendMsgPlayer(message, yt_info.video_details.title)
 
               return
             } 
@@ -79,17 +79,17 @@ module.exports = {
       const videoResult = await ytSearch(query);
       return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
     },
-    async sendMsgMusic(message, titulo)
+    async sendMsgPlayer(message, titulo)
     {
-      let player = new Discord.MessageEmbed().setColor("BLUE").setDescription(titulo).setTitle("Radinho do PKAPA Tocando")
+      let player = new Discord.MessageEmbed().setColor("BLUE").setDescription(titulo).setTitle("Radinho do PKAPA")
       
       let buttons = new Discord.MessageActionRow()
         .addComponents([
-          new Discord.MessageButton().setCustomId('back').setEmoji('⏮️').setStyle('SECONDARY'),
+          new Discord.MessageButton().setCustomId('stop').setEmoji('⏹').setStyle('DANGER'),
           new Discord.MessageButton().setCustomId('pause').setEmoji('⏸️').setStyle('SECONDARY'),
           new Discord.MessageButton().setCustomId('next').setEmoji('⏭️').setStyle('SECONDARY')
         ]);
-      await message.reply({ embeds: [player], components: [buttons]})
+      await message.channel.send({ embeds: [player], components: [buttons]})
     }
     
 }

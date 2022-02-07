@@ -31,7 +31,7 @@ client.on("messageCreate", message => {
     commandFile.run(client, message, args);
   }
   catch(err){
-    console.error("Erro:" + err);
+    console.error("Erro:" + err.message);
     message.channel.send("OPS, não conheço este comando !")
   }
 })
@@ -50,7 +50,7 @@ client.on('interactionCreate', async interaction => {
     interactionFile.run(client, interaction);
   }
   catch(err){
-    console.error("Erro:" + err);
+    console.error("Erro:" + err.message);
   }
 
 })

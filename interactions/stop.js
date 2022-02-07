@@ -1,7 +1,7 @@
 module.exports = {
     run: async (client, interaction) => {
         try {
-            const commandFile = require(`../commands/pause.js`)
+            const commandFile = require(`../commands/stop.js`)
             commandFile.run(client, interaction);
             return
         }
