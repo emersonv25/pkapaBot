@@ -6,7 +6,7 @@ module.exports = {
 
         if(!connection) return message.channel.send("Eu não estou em nenhum canal!")
 
-        message.channel.send("Saindo...")
+        message.channel.send("Saindo...").then(msg => {setTimeout(() => msg.delete(), 5000)})
         connection.destroy()
         
     }

@@ -22,7 +22,7 @@ client.on("messageCreate", message => {
 
   let command = args.shift().toLowerCase();
 
-  if(command == "play" || command == "p"){command = "radio"}
+  if(command == "p"){command = "play"}
   if(command == "j" || command == "entrar") {command = "join"}
   if(command == "exit" || command == "l") {command = "leave"}
   

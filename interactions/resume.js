@@ -2,7 +2,7 @@ module.exports = {
     run: async (client, interaction) => {
         try {
             const commandFile = require(`../commands/resume.js`)
-            commandFile.run(client, interaction);
+            commandFile.run(client, interaction, true);
             return
         }
         catch (ex) {
