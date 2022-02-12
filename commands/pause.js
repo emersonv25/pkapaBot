@@ -1,6 +1,6 @@
 const { getVoiceConnection } = require("@discordjs/voice")
 const Discord = require("discord.js")
-const playerService = require('../helpers/player');
+const playerService = require('../services/player');
 
 module.exports = {
     async run(client, message, args) {
@@ -28,13 +28,12 @@ module.exports = {
         let buttonUpdate = new Discord.MessageActionRow()
         .addComponents([
             new Discord.MessageButton().setCustomId('stop').setEmoji('⏹').setStyle('SECONDARY'),
+            new Discord.MessageButton().setCustomId('back').setEmoji('⏮️').setStyle('SECONDARY'),
             new Discord.MessageButton().setCustomId('resume').setEmoji('▶️').setStyle('SECONDARY'),
             new Discord.MessageButton().setCustomId('next').setEmoji('⏭️').setStyle('SECONDARY')
         ]);
         let msgPlayer = playerService.getMsgPlayer()
         await msgPlayer.edit({ components: [buttonUpdate] });
         message.channel.send("Pausado !").then(msg => {setTimeout(() => msg.delete(), 5000)})
-        if(flInteraction){try{message.deferUpdate()} catch{}}
-
     }
 }

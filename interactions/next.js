@@ -1,9 +1,9 @@
 module.exports = {
     run: async (client, interaction) => {
         try {
-            //const commandFile = require(`../commands/next.js`)
-            //commandFile.run(client, interaction);
-            interaction.channel.send("Em desenvolvimento !")
+            const commandFile = require(`../commands/next.js`)
+            commandFile.run(client, interaction);
+            interaction.deferUpdate()
             return
         }
         catch (ex) {

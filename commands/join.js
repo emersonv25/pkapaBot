@@ -9,7 +9,6 @@ module.exports = {
         if (!permissions.has('CONNECT')) return message.channel.send('Você não tem as permissões necessárias');
         if (!permissions.has('SPEAK')) return message.channel.send('Você não tem as permissões necessárias');
         
-
         //message.channel.send("Entrando em: " + voiceChannel.name)
         const connection = joinVoiceChannel({
             channelId: message.member.voice.channelId,

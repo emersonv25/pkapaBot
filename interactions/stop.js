@@ -3,6 +3,7 @@ module.exports = {
         try {
             const commandFile = require(`../commands/stop.js`)
             commandFile.run(client, interaction, true);
+            interaction.deferUpdate()
             return
         }
         catch (ex) {

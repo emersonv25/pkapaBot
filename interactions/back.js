@@ -1,8 +1,8 @@
 module.exports = {
     run: async (client, interaction) => {
         try {
-            const commandFile = require(`../commands/pause.js`)
-            commandFile.run(client, interaction, true);
+            const commandFile = require(`../commands/back.js`)
+            commandFile.run(client, interaction);
             interaction.deferUpdate()
             return
         }

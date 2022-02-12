@@ -1,4 +1,4 @@
-const playerService = require('../helpers/player');
+const playerService = require('../services/player');
 module.exports = {
     name: "play",
     author: "emersonv25",
@@ -14,7 +14,12 @@ module.exports = {
           playerService.run(client, message, args[0])
           return
         }
-        else{
+        else if (args.length == 0)
+        {
+          playerService.run(client, message);
+        }
+        else
+        {
             const video = await playerService.videoFinder(args.join(' '))
             if(video){
               playerService.run(client, message, video.url);

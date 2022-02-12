@@ -1,7 +1,6 @@
-const { getVoiceConnection } = require("@discordjs/voice")
-const Discord = require("discord.js")
-const playerService = require('../services/player');
+const { getVoiceConnection, AudioPlayerStatus } = require("@discordjs/voice")
 const queueService = require('../services/queue.js')
+
 module.exports = {
     async run(client, message, args) {
         try
@@ -10,14 +9,21 @@ module.exports = {
             let voiceChannel = message.member.voice.channel;
             if (!voiceChannel) return message.channel.send('Você precisa estar conectada em um canal de voz !');
             if(!voicePlayer) return message.channel.send("Não estou tocando nada !")
-            const player = voicePlayer.state.subscription.player
-            queueService.clear()
-            player.stop();
+            
+            try
+            {
+                const player = voicePlayer.state.subscription.player
+                queueService.back()
+                player.stop();
+            }
+            catch{message.channel.send("Não estou tocando nada !")}
+
+
+
             return
         }
         catch(ex)
         {
-            console.log(ex.message)
             message.channel.send("OPS, erro: " + ex.message)
         }
 
