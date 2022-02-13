@@ -23,7 +23,7 @@ module.exports = {
         }
 
     },
-    async updateMsgPlayer(message, flInteraction)
+    async updateMsgPlayer(message)
     {
         let buttonUpdate = new Discord.MessageActionRow()
         .addComponents([
@@ -32,8 +32,10 @@ module.exports = {
             new Discord.MessageButton().setCustomId('resume').setEmoji('▶️').setStyle('SECONDARY'),
             new Discord.MessageButton().setCustomId('next').setEmoji('⏭️').setStyle('SECONDARY')
         ]);
-        let msgPlayer = playerService.getMsgPlayer()
-        await msgPlayer.edit({ components: [buttonUpdate] });
-        message.channel.send("Pausado !").then(msg => {setTimeout(() => msg.delete(), 5000)})
+        let msgPlayer = playerService.getMsgPlayer(message.guildId)
+        if(msgPlayer){
+            await msgPlayer.edit({ components: [buttonUpdate] });
+            message.channel.send("Pausado !").then(msg => {setTimeout(() => msg.delete(), 5000)})
+        }
     }
 }

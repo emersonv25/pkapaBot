@@ -1,5 +1,4 @@
-const { getVoiceConnection, AudioPlayerStatus } = require("@discordjs/voice")
-const queueService = require('../services/queue.js')
+const { getVoiceConnection } = require("@discordjs/voice")
 
 module.exports = {
     async run(client, message, args) {

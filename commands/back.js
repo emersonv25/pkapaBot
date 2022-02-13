@@ -1,4 +1,4 @@
-const { getVoiceConnection, AudioPlayerStatus } = require("@discordjs/voice")
+const { getVoiceConnection } = require("@discordjs/voice")
 const queueService = require('../services/queue.js')
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
             try
             {
                 const player = voicePlayer.state.subscription.player
-                queueService.back()
+                queueService.back(message.guildId)
                 player.stop();
             }
             catch{message.channel.send("Não estou tocando nada !")}

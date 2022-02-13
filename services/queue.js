@@ -1,38 +1,79 @@
 let list = []
-let index = 0
+class Queue {
+    constructor(guildId) {
+      this.guildId = guildId;
+      this.urls = []
+      this.index = 0
+    }
+}
+
 module.exports = {
-    get(){
-        return list[index]
+    getQueue(guildId){
+        let queue = list.find(i => i.guildId == guildId)
+        if(typeof queue == 'undefined')
+        {
+            return false
+        }
+        else if (Object.keys(queue) == 0)
+        {
+            return false
+        }
+        return queue
     },
-    getAll()
+    get(guildId){
+        let queue = this.getQueue(guildId)
+        if(queue)
+        {
+            return queue.urls[queue.index]
+        }
+    },
+    getAll(guildId)
     {
         return list
     },
-    next(){
-        index++
+    next(guildId){
+        queue = this.getQueue(guildId)
+        queue.index++
     },
-    back(){
-        if(index > 0){
-            index = index - 2 
+    back(guildId){
+        queue = this.getQueue(guildId)
+        if(queue.index > 0){
+            queue.index = queue.index - 2 
         }
     },
-    add(url)
+    add(guildId, url)
     {
-        list.push(url) 
-    },
-    remove()
-    {
-        list.splice(index, 1);
-    },
-    clear(){
-        list = []
-        index = 0
-    },
-    finishedQueue()
-    {
-        if(index + 1 > list.length)
+        queue = this.getQueue(guildId)
+        if(queue)
         {
-            return true
+            queue.urls.push(url) 
+        }
+        else{
+            list.push(new Queue(guildId))
+            this.add(guildId,url)
+        }
+       
+    },
+    remove(guildId)
+    {
+        queue = this.getQueue(guildId)
+        queue.urls.splice(queue.index, 1);
+    },
+    clear(guildId){
+        queue = this.getQueue(guildId)
+        queue.urls = []
+        queue.index = 0
+    },
+    finishedQueue(guildId)
+    {
+        queue = this.getQueue(guildId)
+        if(queue)
+        {
+            if(queue.index + 1 > queue.urls.length)
+            {
+                return true
+            }
+            return false
         }
         return false
     }

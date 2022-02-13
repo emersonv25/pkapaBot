@@ -31,8 +31,11 @@ module.exports = {
             new Discord.MessageButton().setCustomId('pause').setEmoji('⏸️').setStyle('SECONDARY'),
             new Discord.MessageButton().setCustomId('next').setEmoji('⏭️').setStyle('SECONDARY')
         ]);
-        let msgPlayer = playerService.getMsgPlayer()
-        await msgPlayer.edit({ components: [buttonUpdate] });
-        message.channel.send("Resumido !").then(msg => {setTimeout(() => msg.delete(), 5000)})
+        let msgPlayer = playerService.getMsgPlayer(message.guildId)
+        if(msgPlayer){
+            await msgPlayer.edit({ components: [buttonUpdate] });
+            message.channel.send("Resumido !").then(msg => {setTimeout(() => msg.delete(), 5000)})
+        }
+
     }
 }
