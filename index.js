@@ -1,5 +1,9 @@
 const Discord = require("discord.js");
-const config = require("./config.json");
+require('dotenv').config()
+
+const token = process.env.TOKEN
+const prefix = process.env.PREFIX
+
 const client = new Discord.Client({
   intents: [
       Discord.Intents.FLAGS.GUILDS,
@@ -15,11 +19,9 @@ client.once("ready", async () => {
 client.on("messageCreate", message => {
   if (message.author.bot) return;
   if (message.channel.type == "dm") return;
-  if (!message.content.toLowerCase().startsWith(config.prefix.toLocaleLowerCase())) return;
+  if (!message.content.toLowerCase().startsWith(prefix.toLocaleLowerCase())) return;
   if(message.content.startsWith(`<@!${client.user.id}>`) || message.content.startsWith(`<@${client.user.id}>`)) return;
-
-  let args = message.content.trim().slice(config.prefix.length).split(/ +/g);
-
+  let args = message.content.trim().slice(prefix.length).split(/ +/g);
   let command = args.shift().toLowerCase();
 
   if(command == "p" || command == "tocar"){command = "play"}
@@ -43,10 +45,6 @@ client.on("messageCreate", message => {
 client.on('interactionCreate', async interaction => {
   if (!interaction.isMessageComponent()) return
 
-  let message = interaction.message;
-  let member = interaction.member;
-  let user = interaction.user;
-
   let customId = interaction.customId
 
   try {
@@ -59,4 +57,4 @@ client.on('interactionCreate', async interaction => {
 
 })
 
-client.login(config.token);
+client.login(token);
