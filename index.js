@@ -22,9 +22,13 @@ client.on("messageCreate", message => {
 
   let command = args.shift().toLowerCase();
 
-  if(command == "p"){command = "play"}
+  if(command == "p" || command == "tocar"){command = "play"}
   if(command == "j" || command == "entrar") {command = "join"}
-  if(command == "exit" || command == "l") {command = "leave"}
+  if(command == "exit" || command == "l" || command == "quit") {command = "leave"}
+  if(command == "skip" || command == "n" || command == "s") {command = "next"}
+  if(command == "r" || command == "resumir" || command == "despausar") { command = "resume"}
+  if(command == "pausar") { command = "pause"}
+  if(command == "voltar" || command == "anterior") { command = "back"}
   
   try {
     const commandFile = require(`./commands/${command}.js`)
