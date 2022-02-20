@@ -10,7 +10,7 @@ const ytSearch = require('yt-search');
 const play = require('play-dl')
 const queueService = require('./queue.js')
 let msgPlayer = []
-let playing = false
+let playing = []
 
 module.exports = {
     name: "player",
@@ -21,9 +21,9 @@ module.exports = {
             queueService.add(message.guildId, url)
         }
 
-        if(playing)
+        if(this.getPlaying(message.guildId))
         {
-            message.channel.send("Adicionado a fila de reprodução").then(msg => {setTimeout(() => msg.delete(), 5000)})
+            message.channel.send("Adicionado a fila de reprodução")
         }
         else if(queueService.finishedQueue(message.guildId, url))
         {
@@ -41,20 +41,20 @@ module.exports = {
                 let yt_info = await play.video_info(urlQueue)
                 let stream = await play.stream(urlQueue)
                 let resource = createAudioResource(stream.stream, { inputType: stream.type });
-                let player =  createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Play } });
+                let player =  createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause } });
                 player.play(resource);
                 connection.subscribe(player);
     
                 this.sendMsgPlayer(message, yt_info.video_details.title)
 
                 player.on(AudioPlayerStatus.Playing, () => {
-                    playing = true;
+                    this.setPlaying(message.guildId, true)
                 })
                 
                 player.on(AudioPlayerStatus.Idle, () => {
                     if(queueService.finishedQueue(message.guildId))
                     {
-                        playing = false
+                        this.setPlaying(message.guildId, false)
                         if(typeof msgPlayer.find(i => i.guildId == message.guildId) != 'undefined'){
                             this.disableMsgPlayer(message.guildId)
                             message.channel.send("Fila finalizada !")
@@ -62,7 +62,7 @@ module.exports = {
                     }
                     else{
                         queueService.next(message.guildId)
-                        playing = false
+                        this.setPlaying(message.guildId, false)
                         this.run(client, message)
                     }
                 })
@@ -134,6 +134,27 @@ module.exports = {
         {
             await msg.delete()
         }   
+    },
+    getPlaying(guildId){
+        let p = playing.find(i => i.guildId == guildId)
+
+        if(typeof p == 'undefined')
+        {
+            playing.push({guildId: guildId, flPlay: false})
+            return false
+        }
+        return p.flPlay
+    },
+    setPlaying(guildId, flag){
+        let playObj = playing.find(i => i.guildId == guildId)
+        if(typeof playObj == 'undefined')
+        {
+            playing.push({guildId: guildId, flPlay: flag})
+        }
+        else{
+            playObj.flPlay = flag
+        }
+        
     }
 
 }
