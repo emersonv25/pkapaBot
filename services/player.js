@@ -5,6 +5,7 @@ const {
     createAudioResource,
     AudioPlayerStatus,
     NoSubscriberBehavior,
+    getVoiceConnection
 } = require('@discordjs/voice');
 const ytSearch = require('yt-search');
 const play = require('play-dl')
