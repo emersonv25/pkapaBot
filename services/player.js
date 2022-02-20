@@ -28,7 +28,15 @@ module.exports = {
         else if(queueService.finishedQueue(message.guildId, url))
         {
             this.disableMsgPlayer(message.guildId)
-            message.channel.send("Lista de reprodução vazia !")
+            
+            if(getVoiceConnection(message.guild.id)){
+                connection.destroy()
+                message.channel.send("Lista de reprodução vazia, Saindo...")
+            }
+            else{
+                message.channel.send("Lista de reprodução vazia !")
+            }
+
         }
         else{
             try {
