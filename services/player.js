@@ -38,6 +38,11 @@ module.exports = {
                     adapterCreator: message.guild.voiceAdapterCreator
                 })
                 let urlQueue = queueService.get(message.guildId)
+                play.setToken({
+                    youtube : {
+                        cookie : '../cookies/youtube.com_cookies.txt'
+                    }
+               })
                 let yt_info = await play.video_info(urlQueue)
                 let stream = await play.stream(urlQueue)
                 let resource = createAudioResource(stream.stream, { inputType: stream.type });
