@@ -28,7 +28,9 @@ module.exports = {
         else if(queueService.finishedQueue(message.guildId, url))
         {
             this.disableMsgPlayer(message.guildId)
-            message.channel.send("Lista de reprodução vazia !")
+            message.channel.send("Fila finalizada !").then(msg => {setTimeout(() => msg.delete(), 5000)})
+            const voicePlayer = getVoiceConnection(message.guild.id);
+            voicePlayer.destroy()
         }
         else{
             try {
@@ -62,7 +64,8 @@ module.exports = {
                         this.setPlaying(message.guildId, false)
                         if(typeof msgPlayer.find(i => i.guildId == message.guildId) != 'undefined'){
                             this.disableMsgPlayer(message.guildId)
-                            message.channel.send("Fila finalizada !")
+                            message.channel.send("Fila finalizada !").then(msg => {setTimeout(() => msg.delete(), 5000)})
+                            connection.destroy()
                        }
                     }
                     else{
