@@ -16,7 +16,8 @@ module.exports = {
         }
         else if (args.length == 0)
         {
-          playerService.run(client, message);
+          //playerService.run(client, message);
+          message.channel.send("Digite o nome ou o link da musica")
         }
         else
         {
