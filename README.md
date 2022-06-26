@@ -22,11 +22,11 @@ Copy or Rename `.env_exemple` to `.env` and fill out the values:
 
 ⚠️ **Note: Never commit or share your token or api keys publicly** ⚠️
 
-```json
-{
-    TOKEN = ''
-    PREFIX = '!!'
-}
+```
+
+    TOKEN = TOKEN_HERE
+    PREFIX = !!
+
 ```
 ##  Commands
 
