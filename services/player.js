@@ -19,7 +19,20 @@ module.exports = {
 
     async run(client, message, url) {
          if(url){
-            queueService.add(message.guildId, url)
+            try{
+                await play.video_info(url)
+                queueService.add(message.guildId, url)
+            }
+            catch{
+                if(this.getPlaying(message.guildId))
+                {
+                    message.channel.send('Não conseguir adicionar a musica na fila: link invalido ou não suportado')
+                }
+                else{
+                    message.channel.send('Não conseguir reproduzir a musica: link invalido ou não suportado')
+                }
+                return
+            }
         }
 
         if(this.getPlaying(message.guildId))
@@ -29,7 +42,7 @@ module.exports = {
         else if(queueService.finishedQueue(message.guildId, url))
         {
             this.disableMsgPlayer(message.guildId)
-            message.channel.send("Fila finalizada !").then(msg => {setTimeout(() => msg.delete(), 5000)})
+            this.sendMsgEnd(message)                     
             const voicePlayer = getVoiceConnection(message.guild.id);
             voicePlayer.destroy()
         }
@@ -65,7 +78,7 @@ module.exports = {
                         this.setPlaying(message.guildId, false)
                         if(typeof msgPlayer.find(i => i.guildId == message.guildId) != 'undefined'){
                             this.disableMsgPlayer(message.guildId)
-                            message.channel.send("Fila finalizada !").then(msg => {setTimeout(() => msg.delete(), 5000)})
+                            this.sendMsgEnd(message)                     
                             connection.destroy()
                        }
                     }
@@ -78,14 +91,15 @@ module.exports = {
             }
             catch (ex) {
                 queueService.remove(message.guildId)
-                message.channel.send("Ops, não conseguir reproduzir a musica. Erro: " + ex.message)
+                console.log('Erro ao reproduzir: ' + url + ' Exception: ' + ex.message)
+                message.channel.send("Ops, algo errado não está certo, não conseguir reproduzir a musica. Erro: " + ex.message)
+                this.run(client, message)
             }
         }
         return
 
     },
     async videoFinder(query) {
-
         const videoResult = await ytSearch(query);
         return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
     },
@@ -112,16 +126,16 @@ module.exports = {
         messagePlayer.message = await message.channel.send({ embeds: [player], components: [buttons] })
     },
     getMsgPlayer(guildId){  
-        let msg = msgPlayer.find(i => i.guildId == guildId).message
-        if(typeof msg == 'undefined')
+        let msg = msgPlayer.find(i => i.guildId == guildId)
+        if(typeof msg == 'undefined' || typeof msg.message == 'undefined')
         {
             return false
         }
-        else if (Object.keys(msg) == 0)
+        else if (Object.keys(msg.message) == 0)
         {
             return false
         }
-        return  msg
+        return  msg.message
     },
     async disableMsgPlayer(guildId){
         let msg = this.getMsgPlayer(guildId)
@@ -164,6 +178,14 @@ module.exports = {
             playObj.flPlay = flag
         }
         
-    }
+    },
+    sendMsgEnd(message){
+        let embed = new Discord.MessageEmbed().setColor("GREEN").setDescription('Ajude o PkapaBot a sobreviver').setTitle("Fila Finalizada")
+        let buttons = new Discord.MessageActionRow()
+        .addComponents([
+            new Discord.MessageButton().setLabel('❖ PIX').setStyle('LINK').setURL('https://nubank.com.br/pagar/1n0dvz/sMiK1M5nAO'),
+        ]);
 
+        message.channel.send({embeds: [embed], components: [buttons]})
+    }
 }
