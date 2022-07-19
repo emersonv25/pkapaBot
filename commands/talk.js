@@ -10,11 +10,11 @@ module.exports = {
             if (message.author.id === "202193332330299392") {
                 let conteudo = message.content
                 conteudo = conteudo.substring(conteudo.indexOf(" "))
-                message.channel.send(conteudo)
-                message.delete()
+                await message.channel.send(conteudo)
+                await message.delete()
             }
             else{
-                message.channel.send('Apenas o meu mestre Pkapa pode utilizar este comando');
+                await message.channel.send('Apenas o meu mestre Pkapa pode utilizar este comando');
             }
 
         }
