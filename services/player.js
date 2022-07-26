@@ -23,12 +23,14 @@ module.exports = {
                 await play.video_info(url)
                 queueService.add(message.guildId, url)
             }
-            catch{
+            catch(e){
                 if(this.getPlaying(message.guildId))
                 {
+                    console.log(e.message)
                     message.channel.send('Não conseguir adicionar a musica na fila: link invalido ou não suportado')
                 }
                 else{
+                    console.log(e.message)
                     message.channel.send('Não conseguir reproduzir a musica: link invalido ou não suportado')
                 }
                 return
