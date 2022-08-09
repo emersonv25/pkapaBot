@@ -6,7 +6,7 @@ module.exports = {
         let playlistId = url.substring(url.indexOf('playlist/') + 9)
         if(playlistId.includes('?'))
         {
-            playlistId = playlistId.substring(0, message.indexOf('?'))
+            playlistId = playlistId.substring(0, url.indexOf('?'))
         }
 
         const params = new URLSearchParams({
