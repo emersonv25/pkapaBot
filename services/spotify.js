@@ -3,7 +3,11 @@ const axios = require('axios')
 module.exports = {
     async getPlaylist(token, url)
     {
-        let playlistId = url.substring(url.indexOf('playlist/') + 9, url.indexOf('?'))
+        let playlistId = url.substring(url.indexOf('playlist/') + 9)
+        if(playlistId.includes('?'))
+        {
+            playlistId = playlistId.substring(0, message.indexOf('?'))
+        }
 
         const params = new URLSearchParams({
             market: 'BR',
