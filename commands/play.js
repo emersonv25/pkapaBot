@@ -21,14 +21,16 @@ module.exports = {
         }
         else
         {
-            const video = await playerService.videoFinder(args.join(' '))
+          playerService.run(client, message, args.join(' '));
+          //const video = await playerService.videoFinder(args.join(' '))
+          /*
             if(video){
               playerService.run(client, message, video.url);
               return
             } 
             else {
               message.channel.send('Não encontrei nenhum resultado para: ' + args.join(' '));
-            }
+            }*/
         }
       }
       catch(ex)

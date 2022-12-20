@@ -36,7 +36,7 @@ module.exports = {
                     queueService.add(message.guildId, track.name + ' ' + track.artists[0].name)
                 }
                 else {
-                    await play.video_info(url)
+                    //await play.video_info(url)
                     queueService.add(message.guildId, url)
                 }
             }
