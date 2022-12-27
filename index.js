@@ -31,7 +31,7 @@ client.on("messageCreate", message => {
   if(command == "r" || command == "resumir" || command == "despausar") { command = "resume"}
   if(command == "pausar") { command = "pause"}
   if(command == "voltar" || command == "anterior") { command = "back"}
-  
+  if( command == "perguntar" || command == "conversar" || command == "c" || command == "speak") { command = "ask" }
   try {
     const commandFile = require(`./commands/${command}.js`)
     commandFile.run(client, message, args);
