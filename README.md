@@ -1,6 +1,10 @@
 #  PkapaBot (Discord Music Bot)
 > PkapaBot is a Discord Music Bot built with discord.js & uses Command Handler from [discordjs.guide](https://discordjs.guide)
 
+> I'm slowly adding new non-music-related features
+
+> Integrated with the ChatGPT API, you can now ask the bot questions and it will respond with the command !!ask
+
 ## Requirements
 
 1. Discord Bot Token **[Guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)**
@@ -29,7 +33,7 @@ Copy or Rename `.env_exemple` to `.env` and fill out the values:
     YOUTUBE_COOKIES = YOUR YOUTUBE COOKIES
     SPOTIFY_CLIENT_ID = CLIENT_ID
     SPOTIFY_CLIENT_SECRET = CLIENT_SECRET
-
+    OPENAI_API_KEY = YOUR_OPENAI_TOKEN
 ```
 ##  Commands
 
@@ -63,6 +67,13 @@ Copy or Rename `.env_exemple` to `.env` and fill out the values:
 * Play previous song **(!!back)**
 * Show ping to Discord API **(/ping)**
 * Media Controls via Buttons
+
+### Others
+
+`!!ask TEXT/QUESTION` 
+
+* Post a question to the chatgpt api 
+
 
 ## Screenshots
 
