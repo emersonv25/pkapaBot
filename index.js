@@ -32,6 +32,7 @@ client.on("messageCreate", message => {
   if(command == "pausar") { command = "pause"}
   if(command == "voltar" || command == "anterior") { command = "back"}
   if( command == "perguntar" || command == "conversar" || command == "a" || command == "speak") { command = "ask" }
+  if(command == "imagem" || command == "imagens" || command == "img") { command = "image"}
   try {
     const commandFile = require(`./commands/${command}.js`)
     commandFile.run(client, message, args);
