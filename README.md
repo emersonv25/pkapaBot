@@ -5,6 +5,8 @@
 
 > Integrated with the ChatGPT API, you can now ask the bot questions and it will respond with the command !!ask
 
+> Integrated with the google api, you can now search one image by text with the command !!image
+
 ## Requirements
 
 1. Discord Bot Token **[Guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)**
@@ -68,12 +70,15 @@ Copy or Rename `.env_exemple` to `.env` and fill out the values:
 * Show ping to Discord API **(/ping)**
 * Media Controls via Buttons
 
-### Others
+### Others Commands
 
 `!!ask TEXT/QUESTION` 
 
 * Post a question to the chatgpt api 
 
+`!!img TEXT_TO_SEARCH` 
+
+* Search a image in google imagens
 
 ## Screenshots
 
