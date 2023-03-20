@@ -6,6 +6,7 @@ const {
     createAudioResource,
     AudioPlayerStatus,
     NoSubscriberBehavior,
+    VoiceConnectionStatus,
     getVoiceConnection
 } = require('@discordjs/voice');
 const ytSearch = require('yt-search');
@@ -60,6 +61,8 @@ module.exports = {
             this.disableMsgPlayer(message.guildId)
             this.sendMsgEnd(message)
             const voicePlayer = getVoiceConnection(message.guild.id);
+            const player = voicePlayer.state.subscription.player
+            player.stop();
             voicePlayer.destroy()
         }
         else {
@@ -101,6 +104,7 @@ module.exports = {
                         if (typeof msgPlayer.find(i => i.guildId == message.guildId) != 'undefined') {
                             this.disableMsgPlayer(message.guildId)
                             this.sendMsgEnd(message)
+                            player.stop()
                             connection.destroy()
                         }
                     }
@@ -109,6 +113,19 @@ module.exports = {
                         this.setPlaying(message.guildId, false)
                         this.run(client, message)
                     }
+                })
+
+                connection.on(VoiceConnectionStatus.Disconnected, () => {
+                    queueService.clear(message.guildId)
+                    player.stop()
+                    this.setPlaying(message.guildId, false)
+                    connection.destroy()
+                })
+
+                connection.on(VoiceConnectionStatus.Destroyed, () => {
+                    queueService.clear(message.guildId)
+                    player.stop()
+                    this.setPlaying(message.guildId, false)
                 })
             }
             catch (ex) {
