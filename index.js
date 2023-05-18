@@ -58,5 +58,15 @@ client.on('interactionCreate', async interaction => {
 
 })
 
+function run(){
+  try {
+    client.login(token);
+  }
+  catch(err){
+    console.log("Exception: " + err.message)
+    console.log("Reiniciando PkapaBot...")
+    run()
+  }
+}
 
-client.login(token);
+run()
