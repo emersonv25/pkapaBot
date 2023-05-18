@@ -119,7 +119,6 @@ module.exports = {
                     queueService.clear(message.guildId)
                     player.stop()
                     this.setPlaying(message.guildId, false)
-                    connection.destroy()
                 })
 
                 connection.on(VoiceConnectionStatus.Destroyed, () => {
