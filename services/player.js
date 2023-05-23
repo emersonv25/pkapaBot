@@ -58,12 +58,16 @@ module.exports = {
             message.channel.send("Adicionado a fila de reprodução")
         }
         else if (queueService.finishedQueue(message.guildId, url)) {
-            this.disableMsgPlayer(message.guildId)
-            this.sendMsgEnd(message)
-            const voicePlayer = getVoiceConnection(message.guild.id);
-            const player = voicePlayer.state.subscription.player
-            player.stop();
-            voicePlayer.destroy()
+            try {
+                this.disableMsgPlayer(message.guildId)
+                this.sendMsgEnd(message)
+                const voicePlayer = getVoiceConnection(message.guild.id);
+                const player = voicePlayer.state.subscription.player
+                player.stop();
+                voicePlayer.destroy()                
+            }
+            catch{}
+
         }
         else {
             try {
