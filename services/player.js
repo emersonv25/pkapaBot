@@ -31,7 +31,7 @@ module.exports = {
                     }
                     message.channel.send("Todos os itens da playlist foram adicionados na fila")
                 }
-                else if (url.includes("open.spotify.com/track")) {
+                else if (url.includes("open.spotify.com")) {
                     let token = await spotify.getToken(process.env.SPOTIFY_CLIENT_ID, process.env.SPOTIFY_CLIENT_SECRET);
                     let track = await spotify.getTrack(token, url)
                     queueService.add(message.guildId, track.name + ' ' + track.artists[0].name)
